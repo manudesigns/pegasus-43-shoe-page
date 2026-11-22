@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# product photos: kept out of the repo (copyright). See public/images/README.md
+/public/images/*
+!/public/images/README.md

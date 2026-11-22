@@ -22,7 +22,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000. To see it at phone size, open your browser's developer tools (F12), turn on device view and set the width to 375.
+Open http://localhost:3000. The product photos are not included in this repo, so the carousel shows placeholders until you add your own (see [`public/images/README.md`](public/images/README.md)). To see it at phone size, open your browser's developer tools (F12), turn on device view and set the width to 375.
 
 To view it on a phone, connect the phone to the same Wi-Fi and open the "Network" address that `npm run dev` prints, such as `http://192.168.1.11:3000`.
 
@@ -44,17 +44,17 @@ npm start
 | `src/data/nike_pegasus_size_stock.json` | Size and stock data (26 sizes) |
 | `src/data/product.ts` | Reads the stock data and sorts it by `display_order` |
 | `src/data/reviews.ts` | Review summary and sample reviews |
-| `public/images/` | Product photos |
+| `public/images/` | Product photos (not in the repo: add your own) |
 | `PROMPT_NOTES.md` | The original requests and how the build follows them |
 
 ## Changing the data
 
 - **Stock:** edit `src/data/nike_pegasus_size_stock.json`. The name, colorway and price come from the first size in the file. Set `in_stock` to `false` (or `stock_status` to `"sold_out"`) to disable a size, and set `stock_status` to `"low_stock"` to show "Only a few left".
-- **Photos:** put the files in `public/images/` and list them in the `slides` array in `src/app/page.tsx`. Square images about 750 × 750 px or larger look sharpest.
+- **Photos:** put the files in `public/images/` with the names listed in [`public/images/README.md`](public/images/README.md), or change the `slides` array in `src/app/page.tsx`. Square images about 750 × 750 px or larger look sharpest. Git ignores everything in that folder, so photos you add stay on your computer.
 - **Reviews:** edit `src/data/reviews.ts`.
 
 ## Placeholders
 
-- **Photos** are dummy images of a different style (IR1228-001), not HV7521-001. They are product photos owned by Nike, so keep this repo private unless you replace them with images you have the right to share.
+- **Photos** are not included. The carousel shows a placeholder for each missing photo.
 - **Reviews** in the bottom sheet are sample text, labelled as samples on the page. The 4.0 rating and 128 count come from the page plan.
 - **Tech copy** is placeholder text.

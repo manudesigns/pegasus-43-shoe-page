@@ -13,6 +13,9 @@ export type Slide = { src: string; alt: string };
 export default function ProductCarousel({ slides }: { slides: Slide[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
+  // Photos aren't in the repo, so a fresh clone has none until they're added.
+  // A missing photo shows a placeholder instead of a broken image.
+  const [missing, setMissing] = useState<Set<string>>(new Set());
 
   function onScroll() {
     const el = trackRef.current;
@@ -46,15 +49,35 @@ export default function ProductCarousel({ slides }: { slides: Slide[] }) {
             aria-label={`${i + 1} of ${slides.length}`}
             className="relative h-full w-full shrink-0 snap-center snap-always"
           >
-            <Image
-              src={slide.src}
-              alt={slide.alt}
-              fill
-              priority={i === 0}
-              sizes="(max-width: 448px) 100vw, 448px"
-              className="object-contain"
-              draggable={false}
-            />
+            {missing.has(slide.src) ? (
+              <div
+                role="img"
+                aria-label={`${slide.alt} (photo not added yet)`}
+                className="flex h-full w-full flex-col items-center justify-center gap-2 text-sm text-neutral-500"
+              >
+                <svg width="140" height="64" viewBox="0 0 140 64" aria-hidden="true">
+                  <path
+                    d="M6 46c18 0 30-8 40-22 4-6 10-8 16-4l14 10c10 6 26 8 44 8 8 0 14 4 14 10v4H10c-4 0-6-2-6-6z"
+                    fill="#d4d4d4"
+                  />
+                  <rect x="4" y="54" width="132" height="6" rx="3" fill="#c4c4c4" />
+                </svg>
+                Photo {i + 1} goes here
+              </div>
+            ) : (
+              <Image
+                src={slide.src}
+                alt={slide.alt}
+                fill
+                priority={i === 0}
+                sizes="(max-width: 448px) 100vw, 448px"
+                className="object-contain"
+                draggable={false}
+                onError={() =>
+                  setMissing((prev) => new Set(prev).add(slide.src))
+                }
+              />
+            )}
           </div>
         ))}
       </div>
