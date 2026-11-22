@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pegasus 43 shoe page
 
-## Getting Started
+A phone product page for the Nike Pegasus 43 (Black/White-Volt, style HV7521-001), built with Next.js and Tailwind CSS. It is designed for a 375 px wide phone screen: no pinching, no sideways scrolling, and nothing on the page jumps while photos load or when a size is picked.
 
-First, run the development server:
+This is a learning project, not an official Nike page.
+
+## What's on the page
+
+1. **Photo carousel.** Four photos in a fixed 375 × 375 box. Swipe between them or tap the dots.
+2. **Name, colorway and price.** "$140" with a **4★ (128 reviews)** link on the right. The link opens the reviews in a bottom sheet that closes with the × button, Esc, or a tap outside it.
+3. **Size grid.** All 26 sizes in `display_order`, in 3 columns, labelled like "M 9 / W 10.5".
+   - Sold-out sizes (M 3.5, M 10, M 15.5, M 16) are greyed out, struck through and can't be tapped.
+   - Low-stock sizes (M 4, M 9, M 9.5, M 11, M 15) show "Only a few left".
+4. **Tech copy.**
+
+## Run it locally
+
+You need [Node.js](https://nodejs.org) 20.9 or later.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. To see it at phone size, open your browser's developer tools (F12), turn on device view and set the width to 375.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To view it on a phone, connect the phone to the same Wi-Fi and open the "Network" address that `npm run dev` prints, such as `http://192.168.1.11:3000`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+For a production build:
 
-## Learn More
+```bash
+npm run build
+npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Project layout
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Path | What it is |
+|---|---|
+| `src/app/page.tsx` | The page: puts the parts together in order |
+| `src/components/ProductCarousel.tsx` | Swipeable photo carousel |
+| `src/components/ReviewsSheet.tsx` | Reviews link and the bottom sheet it opens |
+| `src/components/SizeGrid.tsx` | Size buttons, sold-out and low-stock states |
+| `src/data/nike_pegasus_size_stock.json` | Size and stock data (26 sizes) |
+| `src/data/product.ts` | Reads the stock data and sorts it by `display_order` |
+| `src/data/reviews.ts` | Review summary and sample reviews |
+| `public/images/` | Product photos |
+| `PROMPT_NOTES.md` | The original requests and how the build follows them |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Changing the data
 
-## Deploy on Vercel
+- **Stock:** edit `src/data/nike_pegasus_size_stock.json`. The name, colorway and price come from the first size in the file. Set `in_stock` to `false` (or `stock_status` to `"sold_out"`) to disable a size, and set `stock_status` to `"low_stock"` to show "Only a few left".
+- **Photos:** put the files in `public/images/` and list them in the `slides` array in `src/app/page.tsx`. Square images about 750 × 750 px or larger look sharpest.
+- **Reviews:** edit `src/data/reviews.ts`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Placeholders
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Photos** are dummy images of a different style (IR1228-001), not HV7521-001. They are product photos owned by Nike, so keep this repo private unless you replace them with images you have the right to share.
+- **Reviews** in the bottom sheet are sample text, labelled as samples on the page. The 4.0 rating and 128 count come from the page plan.
+- **Tech copy** is placeholder text.
