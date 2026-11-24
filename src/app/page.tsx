@@ -25,7 +25,8 @@ export default function Page() {
           {product.colorway}
         </p>
         <div className="mt-1 flex items-center justify-between gap-4">
-          <p className="text-xl font-bold leading-7">
+          {/* Fixed 28 px height: the price line can't grow if text or a font arrives late. */}
+          <p data-testid="price" className="h-7 text-xl font-bold leading-7">
             {formatPrice(product.price)}
           </p>
           <ReviewsSheet

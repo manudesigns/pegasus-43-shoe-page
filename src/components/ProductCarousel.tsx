@@ -35,6 +35,8 @@ export default function ProductCarousel({ slides }: { slides: Slide[] }) {
       aria-roledescription="carousel"
       aria-label="Product photos"
       className="relative aspect-square w-full overflow-hidden bg-[#f0f0f0]"
+      // Inline too, so the square box is reserved even before any CSS applies.
+      style={{ aspectRatio: "1 / 1" }}
     >
       <div
         ref={trackRef}
@@ -52,6 +54,7 @@ export default function ProductCarousel({ slides }: { slides: Slide[] }) {
             {missing.has(slide.src) ? (
               <div
                 role="img"
+                data-testid={i === 0 ? "main-photo" : undefined}
                 aria-label={`${slide.alt} (photo not added yet)`}
                 className="flex h-full w-full flex-col items-center justify-center gap-2 text-sm text-neutral-500"
               >
@@ -69,7 +72,10 @@ export default function ProductCarousel({ slides }: { slides: Slide[] }) {
                 src={slide.src}
                 alt={slide.alt}
                 fill
-                priority={i === 0}
+                // Next 16: `preload` replaces the deprecated `priority`. It adds a
+                // <link rel="preload"> in <head> for the first (LCP) photo only.
+                preload={i === 0}
+                data-testid={i === 0 ? "main-photo" : undefined}
                 sizes="(max-width: 448px) 100vw, 448px"
                 className="object-contain"
                 draggable={false}

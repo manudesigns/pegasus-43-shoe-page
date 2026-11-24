@@ -7,7 +7,11 @@ export default function SizeGrid({ sizes }: { sizes: SizeStock[] }) {
   const [selected, setSelected] = useState<string | null>(null);
 
   return (
-    <section aria-labelledby="size-heading" className="mt-6 px-4">
+    <section
+      aria-labelledby="size-heading"
+      data-testid="size-grid"
+      className="mt-6 px-4"
+    >
       <h2 id="size-heading" className="text-base font-semibold leading-6">
         Select size
       </h2>
@@ -27,6 +31,7 @@ export default function SizeGrid({ sizes }: { sizes: SizeStock[] }) {
               key={s.sku}
               type="button"
               disabled={soldOut}
+              data-testid={soldOut ? "size-button-sold-out" : "size-button"}
               aria-pressed={soldOut ? undefined : isSelected}
               onClick={() => setSelected(s.sku)}
               className={[
